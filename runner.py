@@ -157,7 +157,7 @@ player.toFront()
 
 # Back Function
 def goBack():
-    if app.backButtonEnabled == True:
+    if app.backButtonEnabled:
         startScreenLabels.visible = True
         keybindsScreenLabels.visible = False
         infoGroup.visible = False
@@ -264,7 +264,7 @@ def onMousePress(x, y):
             exitConf5.visible = False
         if app.confirmExit:
             if exitConf4.contains(x, y):
-                app.stop()
+                exit()
             elif exitConf5.contains(x, y):
                 exitConfGroup.centerY = 250
                 exitConfGroup.visible = False
@@ -300,9 +300,9 @@ def onMousePress(x, y):
             infoGroup.visible = True
 
     # Level 1
-    if app.world1a1 == True:
+    if app.world1a1:
         if w1a1l15.contains(x, y):
-            if w1a1l15.visible == True:
+            if w1a1l15.visible:
                 w1a1l15.visible = False
                 ls2.size = 15
                 app.levelSelected = 'None'
@@ -314,7 +314,7 @@ def onMousePress(x, y):
                 ls2.value = 'Level Selected: ' + app.levelSelected
 
     # Exit Game Function
-    if app.startScreen == True:
+    if app.startScreen:
         if gameExitHB.contains(x, y):
             app.confirmExit = True
             exitConfGroup.visible = True
@@ -322,13 +322,13 @@ def onMousePress(x, y):
             exitConf5.visible = False
         if app.confirmExit:
             if exitConf4.contains(x, y):
-                app.stop()
+                exit()
             elif exitConf5.contains(x, y):
                 exitConfGroup.visible = False
                 app.confirmExit = False
 
     # Go Back to Start Screen
-    if app.backButtonEnabled == True:
+    if app.backButtonEnabled:
         if backLabelHitbox.contains(x, y):
             goBack()
     # Change keybind if they click on it
@@ -381,9 +381,9 @@ def onMousePress(x, y):
                 app.menuKeybind = choice(shuffleKeybinds)
                 menuKeybindsLabel.value = 'Menu: ' + app.menuKeybind
         if leftKeybindsHB.contains(x, y):
-            if app.changeRightKeybind == False:
-                if app.changeMenuKeybind == False:
-                    if app.changeLeftKeybind == True:
+            if not app.changeRightKeybind:
+                if not app.changeMenuKeybind:
+                    if app.changeLeftKeybind:
                         app.changeLeftKeybind = False
                         cks2.visible = False
                     else:
@@ -391,9 +391,9 @@ def onMousePress(x, y):
                         cks2.visible = True
                         cks2.value = 'Now Editing Left Keybind'
         elif rightKeybindsHB.contains(x, y):
-            if app.changeLeftKeybind == False:
-                if app.changeMenuKeybind == False:
-                    if app.changeRightKeybind == True:
+            if not app.changeLeftKeybind:
+                if not app.changeMenuKeybind:
+                    if app.changeRightKeybind:
                         app.changeRightKeybind = False
                         cks2.visible = False
                     else:
@@ -401,9 +401,9 @@ def onMousePress(x, y):
                         cks2.visible = True
                         cks2.value = 'Now Editing Right Keybind'
         elif menuKeybindsHB.contains(x, y):
-            if app.changeLeftKeybind == False:
-                if app.changeRightKeybind == False:
-                    if app.changeMenuKeybind == True:
+            if not app.changeLeftKeybind:
+                if not app.changeRightKeybind:
+                    if app.changeMenuKeybind:
                         app.changeMenuKeybind = False
                         cks2.visible = False
                     else:
@@ -418,13 +418,13 @@ def onKeyPress(key):
         if app.startScreen:
             print('no')
         else:
-            if menu.visible == True:
+            if menu.visible:
                 app.menuOn = False
             else:
                 app.menuOn = True
     if app.keybindsScreen:
         # Change left Keybind
-        if app.changeLeftKeybind == True:
+        if app.changeLeftKeybind:
             if key == app.leftKeybind or key == app.rightKeybind or key == app.menuKeybind:
                 cks2.value = "Can't use that keybind!"
             else:
@@ -443,7 +443,7 @@ def onKeyPress(key):
             leftKeybindsLabel.centerX = 40
             leftKeybindsHB.width = 75
         # Change right Keybind
-        if app.changeRightKeybind == True:
+        if app.changeRightKeybind:
             if key == app.leftKeybind or key == app.rightKeybind or key == app.menuKeybind:
                 cks2.value = "Can't use that keybind!"
             else:
@@ -461,7 +461,7 @@ def onKeyPress(key):
             rightKeybindsLabel.centerX = 47
             rightKeybindsHB.width = 90
         # Change Menu Keybind
-        if app.changeMenuKeybind == True:
+        if app.changeMenuKeybind:
             if key == app.leftKeybind or key == app.rightKeybind or key == app.menuKeybind:
                 cks2.value = "Can't use that keybind!"
             else:
@@ -482,38 +482,38 @@ def onKeyPress(key):
 
 # Runs when a key is being held
 def onKeyHold(keys):
-    if app.playerMovement == True:
+    if app.playerMovement:
         if app.leftKeybind in keys:
-            if app.playerMovement == True:
+            if app.playerMovement:
                 player.centerX -= 5
         elif app.rightKeybind in keys:
-            if app.playerMovement == True:
+            if app.playerMovement:
                 player.centerX += 5
 
 
 # Runs every second
 def onStep():
-    if app.menuOn == True:
+    if app.menuOn:
         menu.visible = True
         app.playerMovement = False
     else:
         menu.visible = False
         app.playerMovement = True
-    if app.world1a1 == True:
+    if app.world1a1:
         if player.left < 0:
             player.left = 0
         elif player.right > 400:
             app.world1a1 = False
             app.world1a2 = True
             player.left = 0
-    elif app.world1a2 == True:
+    elif app.world1a2:
         if player.left < 0:
             app.world1a1 = True
             app.world1a2 = False
             player.right = 400
         elif player.right > 400:
             player.right = 400
-    if app.world1a1 == True:
+    if app.world1a1:
         w1a1Group.visible = True
         player.visible = True
         w1a2Group.visible = False
@@ -527,7 +527,7 @@ def onStep():
             ls3.visible = True
             ls4.visible = True
             app.levelPlay = True
-    if app.world1a2 == True:
+    if app.world1a2:
         w1a1Group.visible = False
         w1a2Group.visible = True
         lsGroup.visible = False
