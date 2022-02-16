@@ -157,16 +157,22 @@ player.toFront()
 
 # Back Function
 def goBack():
-    if app.backButtonEnabled:
-        startScreenLabels.visible = True
-        keybindsScreenLabels.visible = False
-        infoGroup.visible = False
-        app.startScreen = True
-        app.keybindsScreen = False
-        app.infoScreen = False
-        backLabel.visible = False
-        backLabelHitbox.visible = False
-        app.backButtonEnabled = False
+    if not app.changeLeftKeybind:
+        if not app.changeRightKeybind:
+            if not app.changeMenuKeybind:
+                if app.backButtonEnabled:
+                    startScreenLabels.visible = True
+                    keybindsScreenLabels.visible = False
+                    infoGroup.visible = False
+                    app.startScreen = True
+                    app.keybindsScreen = False
+                    app.infoScreen = False
+                    backLabel.visible = False
+                    backLabelHitbox.visible = False
+                    app.backButtonEnabled = False
+    if app.changeLeftKeybind or app.changeRightKeybind or app.changeMenuKeybind:
+        print('debug')
+        cks2.value = "Choose a Keybind First!"
 
 
 # Check whenever the mouse Moves
